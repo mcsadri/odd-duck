@@ -1,3 +1,26 @@
+header {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 50px;
+}
+
+main p {
+    margin: 1rem;
+}
+
+main div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 1rem;
+}
+
 main img {
     max-height: 250px;
     object-fit: contain;

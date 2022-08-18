@@ -28,9 +28,7 @@ function Product(fileName) { // accepts new product as a filename e.g. bag.jpg
 
 // function to return a random index for allProducts array
 function rPG() { // the notorious Random Product Generator (this isn't nearly as clever as I think it is)
-
     let products = []; // array to hold selected products to be displayed to user for voting
-
     // generate disaplyQty number of randomly selected unique product images to be displayed to user
     while (products.length < displayQty) {
         // returns a whole number 0 - index of last item in allProducts array
@@ -40,7 +38,6 @@ function rPG() { // the notorious Random Product Generator (this isn't nearly as
             prodObjs[index].countShown++;
         }
     }
-
     // display each of the selected products and insert attribute values
     for (let i = 0; i < products.length; i++) {
         let img = document.getElementById(`productImage${i}`);
@@ -50,52 +47,61 @@ function rPG() { // the notorious Random Product Generator (this isn't nearly as
     }
 }
 
+// function to display View Results button after voteCount === maxVotes, and add event listener for said button
+function displayButton() {
+    // display button viewResultsBtn
+    document.getElementById('viewResults').innerHTML = '<input type="button" id="viewResultsBtn" value="View Results"/>';
+    // event listener to invole renderResults when button is clicked
+    let viewResultsBtn = document.getElementById('viewResultsBtn');
+    viewResultsBtn.addEventListener('click', renderResults);
+}
+
 // Event listener for product voting buttons
 let buttons = [document.getElementById('voteButton0'), document.getElementById('voteButton1'), document.getElementById('voteButton2')];
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', voteCounter);
 }
 
+
 // Event handler to increment vote trackers & remove event listener after maxVotes is reached
 function voteCounter(event) {
-
-    // logic to increment vote counters
+    // increment vote counters on a user slection
     if (event){
-        voteCount++;
         let target = event.target.alt;
-        console.log('target ' + target);
-
         for (let i = 0; i < prodObjs.length; i++) {
             if (target === prodObjs[i].name) {
                 prodObjs[i].countVoted++;
-                //console.log('prodObjs[i] = ' +  )
                 break;
             }
         }
-
-        // logic for when voting rounds have been completed to remove the event handler
+        // when voting rounds have been completed remove the event handler, display Print Results button, and exit the function
         if (voteCount === maxVotes) {
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].removeEventListener('click', voteCounter);
             }
+            displayButton();
+            return;
         }
+        voteCount++;
     }
-
+    // get new products to display
     rPG();
+}
 
-    console.log('voteCount ' + voteCount);
-
-    let shown  = [];
+// event handler to display voting results
+function renderResults() { // function solution in part via Brandon Mizutani @ https://github.com/bran2miz/bus-mall/blob/lab-11-bus-mall/js/app.js
+    // remove button since the event listener is out of scope in a different function
+    document.getElementById('viewResults').innerHTML = '';
+    // create unordered list to hold voting results
+    let votingResults = document.getElementById('viewResults');
+    let ul = document.createElement('ul');
+    votingResults.appendChild(ul);
+    // create list items for each product
     for (let i = 0; i < prodObjs.length; i++) {
-        shown.push(prodObjs[i].countShown);
+        let li = document.createElement('li');
+        li.textContent = `${prodObjs[i].name} had ${prodObjs[i].countVoted} votes, and was seen ${prodObjs[i].countShown} times.`;
+        ul.appendChild(li);
     }
-    console.log('shown ' + shown);
-
-    let votes  = [];
-    for (let i = 0; i < prodObjs.length; i++) {
-        votes.push(prodObjs[i].countVoted);
-    }
-    console.log('votes ' + votes);
 }
 
 voteCounter();

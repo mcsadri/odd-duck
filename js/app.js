@@ -4,7 +4,7 @@
 
 // Global variables
 let voteCount = 0; // user's product vote counter
-let maxVotes = 5; // maximum number of product voting rounds
+let maxVotes = 25; // maximum number of product voting rounds
 let displayQty = 3; // number of products to be displayed at one time for voting
 let prodObjs = []; // arrary of product objects
 let allProducts = [ // eslint-disable-line

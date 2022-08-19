@@ -4,7 +4,7 @@
 
 // Global variables
 let voteCount = 0; // user's product vote counter
-let maxVotes = 25; // maximum number of product voting rounds
+let maxVotes = 5; // maximum number of product voting rounds
 let displayQty = 3; // number of products to be displayed at one time for voting
 let allProducts = [ // eslint-disable-line
     // array of Product constructor calls where argumment value equals name of img asset
@@ -14,6 +14,7 @@ let allProducts = [ // eslint-disable-line
     new Product('scissors.jpg'), new Product('shark.jpg'), new Product('sweep.png'), new Product('tauntaun.jpg'),
     new Product('unicorn.jpg'), new Product('water-can.jpg'), new Product('wine-glass.jpg'),
 ];
+let lastDisplayed = []; // array to hold the products that were previously displayed for voting to be used for comparison on the nextr round to avoid repeating images on subsequent voting rounds
 
 
 // Product constructor
@@ -31,11 +32,16 @@ function rPG() { // the notorious Random Product Generator (this isn't nearly as
     while (products.length < displayQty) {
         // returns a whole number 0 - index of last item in allProducts array
         let index = Math.floor(Math.random() * allProducts.length);
-        while (!products.includes(allProducts[index])) {
+        // prevent repeating a product that's 1) already in this voting round or 2) displayed in the previous voting round
+        while (!products.includes(allProducts[index]) && !lastDisplayed.includes(allProducts[index])) {
+            // add randomly selected product to this voting round
             products.push(allProducts[index]);
+            // increment display counter for randomly selected product
             allProducts[index].countShown++;
         }
     }
+
+
     // display each of the selected products and insert attribute values
     for (let i = 0; i < products.length; i++) {
         let img = document.getElementById(`productImage${i}`);
@@ -43,13 +49,14 @@ function rPG() { // the notorious Random Product Generator (this isn't nearly as
         img.alt = products[i].name;
         img.title = products[i].name;
     }
+    lastDisplayed = products;
 }
 
 // function to display View Results button after voteCount === maxVotes, and add event listener for said button
 function displayButton() {
     // display button viewResultsBtn
     document.getElementById('viewResults').innerHTML = '<input type="button" id="viewResultsBtn" value="View Results"/>';
-    // event listener to invole renderResults when button is clicked
+    // event listener to invoke renderResults when button is clicked
     let viewResultsBtn = document.getElementById('viewResultsBtn');
     viewResultsBtn.addEventListener('click', renderResults);
 }

@@ -6,7 +6,6 @@
 let voteCount = 0; // user's product vote counter
 let maxVotes = 25; // maximum number of product voting rounds
 let displayQty = 3; // number of products to be displayed at one time for voting
-let prodObjs = []; // arrary of product objects
 let allProducts = [ // eslint-disable-line
     // array of Product constructor calls where argumment value equals name of img asset
     new Product('bag.jpg'), new Product('banana.jpg'), new Product('bathroom.jpg'), new Product('boots.jpg'),
@@ -23,7 +22,6 @@ function Product(fileName) { // accepts new product as a filename e.g. bag.jpg
     this.filePath = `img/${fileName}`; // storage location of product image file
     this.countShown = 0; // counts number of times the product has been displayed for voting
     this.countVoted = 0; // counts number of times the product has been chosen by the user
-    prodObjs.push(this);
 }
 
 // function to return a random index for allProducts array
@@ -32,10 +30,10 @@ function rPG() { // the notorious Random Product Generator (this isn't nearly as
     // generate disaplyQty number of randomly selected unique product images to be displayed to user
     while (products.length < displayQty) {
         // returns a whole number 0 - index of last item in allProducts array
-        let index = Math.floor(Math.random() * prodObjs.length);
-        while (!products.includes(prodObjs[index])) {
-            products.push(prodObjs[index]);
-            prodObjs[index].countShown++;
+        let index = Math.floor(Math.random() * allProducts.length);
+        while (!products.includes(allProducts[index])) {
+            products.push(allProducts[index]);
+            allProducts[index].countShown++;
         }
     }
     // display each of the selected products and insert attribute values
@@ -68,9 +66,9 @@ function voteCounter(event) {
     // increment vote counters on a user slection
     if (event){
         let target = event.target.alt;
-        for (let i = 0; i < prodObjs.length; i++) {
-            if (target === prodObjs[i].name) {
-                prodObjs[i].countVoted++;
+        for (let i = 0; i < allProducts.length; i++) {
+            if (target === allProducts[i].name) {
+                allProducts[i].countVoted++;
                 break;
             }
         }
@@ -97,9 +95,9 @@ function renderResults() { // function solution in part via Brandon Mizutani @ h
     let ul = document.createElement('ul');
     votingResults.appendChild(ul);
     // create list items for each product
-    for (let i = 0; i < prodObjs.length; i++) {
+    for (let i = 0; i < allProducts.length; i++) {
         let li = document.createElement('li');
-        li.textContent = `${prodObjs[i].name} had ${prodObjs[i].countVoted} votes, and was seen ${prodObjs[i].countShown} times.`;
+        li.textContent = `${allProducts[i].name} had ${allProducts[i].countVoted} votes, and was seen ${allProducts[i].countShown} times.`;
         ul.appendChild(li);
     }
 }

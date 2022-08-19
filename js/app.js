@@ -16,7 +16,6 @@ let allProducts = [ // eslint-disable-line
 ];
 let lastDisplayed = []; // array to hold the products that were previously displayed for voting to be used for comparison on the nextr round to avoid repeating images on subsequent voting rounds
 
-
 // Product constructor
 function Product(fileName) { // accepts new product as a filename e.g. bag.jpg
     this.name = fileName.substring(0, fileName.indexOf('.')); // name of product dervived from file name
@@ -40,7 +39,6 @@ function rPG() { // the notorious Random Product Generator (this isn't nearly as
             allProducts[index].countShown++;
         }
     }
-
 
     // display each of the selected products and insert attribute values
     for (let i = 0; i < products.length; i++) {
@@ -66,7 +64,6 @@ let buttons = [document.getElementById('voteButton0'), document.getElementById('
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', voteCounter);
 }
-
 
 // Event handler to increment vote trackers & remove event listener after maxVotes is reached
 function voteCounter(event) {

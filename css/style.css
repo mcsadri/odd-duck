@@ -40,3 +40,11 @@ main ul {
     border: 1px solid black;
     padding: 1rem;
 }
+
+main li {
+    padding: .1rem;
+}
+
+#shaded {
+    background-color: #bcd4e6;
+}

@@ -59,6 +59,14 @@ function displayButton() {
     viewResultsBtn.addEventListener('click', renderResults);
 }
 
+// function to render chart of voting results
+function renderChart() {
+
+
+
+}
+
+
 // Event listener for product voting buttons
 let buttons = [document.getElementById('voteButton0'), document.getElementById('voteButton1'), document.getElementById('voteButton2')];
 for (let i = 0; i < buttons.length; i++) {
@@ -94,14 +102,22 @@ function voteCounter(event) {
 function renderResults() { // function solution in part via Brandon Mizutani @ https://github.com/bran2miz/bus-mall/blob/lab-11-bus-mall/js/app.js
     // remove button since the event listener is out of scope in a different function
     document.getElementById('viewResults').innerHTML = '';
+
+    // display voting results chart
+    renderChart();
+
     // create unordered list to hold voting results
     let votingResults = document.getElementById('viewResults');
     let ul = document.createElement('ul');
     votingResults.appendChild(ul);
-    // create list items for each product
+    // create list items to display voting results for each product
     for (let i = 0; i < allProducts.length; i++) {
         let li = document.createElement('li');
         li.textContent = `${allProducts[i].name} had ${allProducts[i].countVoted} votes, and was seen ${allProducts[i].countShown} times.`;
+        // set element ID for even numbered products to apply color shading
+        if (i % 2 === 0){
+            li.setAttribute('id', 'shaded');
+        }
         ul.appendChild(li);
     }
 }

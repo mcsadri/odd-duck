@@ -2,14 +2,12 @@
 
 Odd Duck Products, a Code Fellows Code201 project  
 Developer: Manuch Sadri  
-Tools: Visual Studio Code  
+Tools: Visual Studio Code, [ChatJS.org](https://www.chartjs.org/docs/latest/getting-started/)  
 License: MIT License  
 
 ---
 
-## Lab 11
-
-### Problem Domain
+## Problem Domain
 
 Odd Duck Product Co is trying to decide which project from their R&D department they should invest in next to sell. They asked you to make a web page that they can run at a kiosk at the front entrance of their campus. Whenever an employee walks by, the employee can vote for 1 of the 3 products displayed that they think should be the next new product brought to market. After a week of collecting data, they would like some nice graphs to visualize the results.
 
@@ -23,8 +21,14 @@ The marketing team is not only interested in the total number of clicks, but als
 
 You are also responsible for the look and feel of the app, so don’t forget a custom font, color palette, layout with semantic HTML, and so on.
 
-### User Stories & Instructions
+---
+
+## User Stories & Instructions
+
+### Lab 11
 
 [Lab: Odd Duck Products](https://codefellows.github.io/code-201-guide/curriculum/class-11/lab/)
 
----
+### Lab 12
+
+[Lab: Add a Chart to Your Odd Duck Product App](https://codefellows.github.io/code-201-guide/curriculum/class-12/lab/)

@@ -2,7 +2,7 @@
 
 Odd Duck Products, a Code Fellows Code201 project  
 Developer: Manuch Sadri  
-Tools: Visual Studio Code, [ChatJS.org](https://www.chartjs.org/docs/latest/getting-started/)  
+Tools: Visual Studio Code, [ChartJS.org](https://www.chartjs.org/docs/latest/getting-started/)  
 License: MIT License  
 
 ---

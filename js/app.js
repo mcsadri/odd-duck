@@ -4,7 +4,7 @@
 
 // Global variables
 let voteCount = 0; // user's product vote counter
-let maxVotes = 5; // maximum number of product voting rounds
+let maxVotes = 25; // maximum number of product voting rounds
 let displayQty = 3; // number of products to be displayed at one time for voting
 let allProducts = [ // eslint-disable-line
     // array of Product constructor calls where argumment value equals name of img asset
@@ -61,11 +61,77 @@ function displayButton() {
 
 // function to render chart of voting results
 function renderChart() {
+    let productNames = [];
+    for (let i = 0; i < allProducts.length; i++) {
+        productNames.push(allProducts[i].name);
+    }
+    let voted  = [];
+    for (let i = 0; i < allProducts.length; i++) {
+        voted.push(allProducts[i].countVoted);
+    }
+    let shown  = [];
+    for (let i = 0; i < allProducts.length; i++) {
+        shown.push(allProducts[i].countShown);
+    }
 
-
-
+    // chart to display voting results - based on code example from https://www.chartjs.org/docs/latest/getting-started/usage.html
+    const ctx = document.getElementById('chartVotes').getContext('2d');
+    const chartVotes = new Chart(ctx, { // eslint-disable-line
+        type: 'bar',
+        data: {
+            labels: productNames,
+            datasets: [{
+                label: '# of Votes',
+                data: voted,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            },
+            {
+                label: '# of Displays',
+                data: shown,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    });
 }
-
 
 // Event listener for product voting buttons
 let buttons = [document.getElementById('voteButton0'), document.getElementById('voteButton1'), document.getElementById('voteButton2')];
@@ -77,6 +143,7 @@ for (let i = 0; i < buttons.length; i++) {
 function voteCounter(event) {
     // increment vote counters on a user slection
     if (event){
+        voteCount++;
         let target = event.target.alt;
         for (let i = 0; i < allProducts.length; i++) {
             if (target === allProducts[i].name) {
@@ -88,11 +155,11 @@ function voteCounter(event) {
         if (voteCount === maxVotes) {
             for (let i = 0; i < buttons.length; i++) {
                 buttons[i].removeEventListener('click', voteCounter);
+                document.getElementById('productButtons').innerHTML = '';
             }
             displayButton();
             return;
         }
-        voteCount++;
     }
     // get new products to display
     rPG();
@@ -102,10 +169,8 @@ function voteCounter(event) {
 function renderResults() { // function solution in part via Brandon Mizutani @ https://github.com/bran2miz/bus-mall/blob/lab-11-bus-mall/js/app.js
     // remove button since the event listener is out of scope in a different function
     document.getElementById('viewResults').innerHTML = '';
-
     // display voting results chart
     renderChart();
-
     // create unordered list to hold voting results
     let votingResults = document.getElementById('viewResults');
     let ul = document.createElement('ul');

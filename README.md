@@ -32,3 +32,7 @@ You are also responsible for the look and feel of the app, so don’t forget a c
 ### Lab 12
 
 [Lab: Add a Chart to Your Odd Duck Product App](https://codefellows.github.io/code-201-guide/curriculum/class-12/lab/)
+
+### Lab 13
+
+[Lab: Add Local Storage to Odd Duck Products](https://canvas.instructure.com/courses/4898184/assignments/30604022)

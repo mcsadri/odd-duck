@@ -62,15 +62,11 @@ function displayButton() {
 // function to render chart of voting results
 function renderChart() {
     let productNames = [];
-    for (let i = 0; i < allProducts.length; i++) {
-        productNames.push(allProducts[i].name);
-    }
     let voted  = [];
-    for (let i = 0; i < allProducts.length; i++) {
-        voted.push(allProducts[i].countVoted);
-    }
     let shown  = [];
     for (let i = 0; i < allProducts.length; i++) {
+        productNames.push(allProducts[i].name);
+        voted.push(allProducts[i].countVoted);
         shown.push(allProducts[i].countShown);
     }
 
@@ -133,6 +129,14 @@ function renderChart() {
     });
 }
 
+// function to write local storage
+
+
+
+// function to fetch local storage
+
+
+
 // Event listener for product voting buttons
 let buttons = [document.getElementById('voteButton0'), document.getElementById('voteButton1'), document.getElementById('voteButton2')];
 for (let i = 0; i < buttons.length; i++) {
@@ -148,6 +152,7 @@ function voteCounter(event) {
         for (let i = 0; i < allProducts.length; i++) {
             if (target === allProducts[i].name) {
                 allProducts[i].countVoted++;
+                // function call to update local storage with vote
                 break;
             }
         }

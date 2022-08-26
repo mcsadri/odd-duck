@@ -4,7 +4,7 @@
 
 // Global variables
 let voteCount = 0; // user's product vote counter
-let maxVotes = 25; // maximum number of product voting rounds
+let maxVotes = 5; // maximum number of product voting rounds
 let displayQty = 3; // number of products to be displayed at one time for voting
 let allProducts = [ // eslint-disable-line
     // array of Product constructor calls where argumment value equals name of img asset
@@ -129,12 +129,39 @@ function renderChart() {
     });
 }
 
-// function to write local storage
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
+// for lab 13:
+// Steps for local storage:
+// 	1. Setting items
+// 		a. JSON.stringify()  - turns javascript object into JSON object
+// 		b. localStorage.setItem("key", "value")
+// 	2. Getting items
+// 		a. localStorage.getItem("key")
+//      b. JSON.parse(variable)
 
+// function setAllProducts()
+function setItems(key, value){
+    // step 1a
+    let stringifyVersion = JSON.stringify(value);
+    // step 1b
+    localStorage.setItem(key, stringifyVersion);
+}
 
-// function to fetch local storage
+// function getAllProducts()
+function getItems(key) {
+    // step 2a
+    let stringifyVersion = localStorage.getItem(key);
 
+    // step 2b
+    let parsedVersion = JSON.parse(stringifyVersion);
+
+    return parsedVersion;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Event listener for product voting buttons
@@ -145,6 +172,12 @@ for (let i = 0; i < buttons.length; i++) {
 
 // Event handler to increment vote trackers & remove event listener after maxVotes is reached
 function voteCounter(event) {
+    // invoke the getAllProducts() function here
+    if (getItems('allProducts')){ // brings in item only if it already exists
+        allProducts = getItems('allProducts');
+    }
+    console.log(allProducts);
+
     // increment vote counters on a user slection
     if (event){
         voteCount++;
@@ -162,12 +195,17 @@ function voteCounter(event) {
                 buttons[i].removeEventListener('click', voteCounter);
                 document.getElementById('productButtons').innerHTML = '';
             }
+            // invoke the setItems function here
+            setItems('allProducts', allProducts);
+
             displayButton();
             return;
         }
     }
     // get new products to display
     rPG();
+
+
 }
 
 // event handler to display voting results
